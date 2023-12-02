@@ -1,7 +1,7 @@
 """Advent of Code 2023 - Day 1 tasks"""
 
-import os
 import re
+import util
 
 
 def part_one():
@@ -45,7 +45,7 @@ def part_one():
     Consider your entire calibration document. What is the sum of all of the calibration values?
     """
     total = 0
-    for line in get_lines():
+    for line in util.get_lines('day01'):
         numbers = get_numbers(line)
         total += int(numbers[0] + numbers[-1])
     print("Part one: " + str(total))
@@ -74,23 +74,10 @@ def part_two():
     What is the sum of all of the calibration values?
     """
     total = 0
-    for line in get_lines():
+    for line in util.get_lines('day01'):
         numbers = get_numbers(replace_first_and_last_written_numbers(line))
         total += int(numbers[0] + numbers[-1])
     print("Part two: " + str(total))
-
-
-def get_lines():
-    """
-    Read the lines from the input file and return them as a list.
-
-    Returns:
-        list: A list of strings representing the lines from the input file.
-    """
-    file_path = os.path.dirname(
-        os.path.abspath(__file__)) + '/inputs/day01.txt'
-    with open(file_path, "r", encoding="utf-8") as file:
-        return file.readlines()
 
 
 def replace_first_and_last_written_numbers(line):
