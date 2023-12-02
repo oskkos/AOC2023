@@ -1,10 +1,15 @@
 """Advent of Code 2023 - Day 1 tasks"""
 
 import re
-import util
+
+# pylint: disable=import-error
+if __package__ is None or __package__ == '':
+    import util
+else:
+    from . import util
 
 
-def part_one():
+def part_one(lines):
     """
     --- Day 1: Trebuchet?! ---
     Something is wrong with global snow production, and you've been selected to take a look.
@@ -45,13 +50,13 @@ def part_one():
     Consider your entire calibration document. What is the sum of all of the calibration values?
     """
     total = 0
-    for line in util.get_lines('day01'):
+    for line in lines:
         numbers = get_first_and_last_number_digits_only(line)
         total += int(numbers)
-    print("Part one: " + str(total))
+    return total
 
 
-def part_two():
+def part_two(lines):
     """
     --- Part Two ---
     Your calculation isn't quite right. It looks like some of the digits are actually spelled out
@@ -74,11 +79,10 @@ def part_two():
     What is the sum of all of the calibration values?
     """
     total = 0
-    for line in util.get_lines('day01'):
+    for line in lines:
         numbers = get_first_and_last_number_digits_or_written(line)
         total = total + int(numbers)
-    print("Part two: " + str(total))
-
+    return total
 
 def get_first_and_last_number_digits_only(line):
     """
@@ -127,5 +131,6 @@ def get_first_and_last_number_digits_or_written(line):
     return first_num + last_num
 
 
-part_one()
-part_two()
+file_lines = util.get_lines('day01')
+print("Part one: " + str(part_one(file_lines)))
+print("Part two: " + str(part_two(file_lines)))

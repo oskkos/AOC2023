@@ -1,10 +1,15 @@
 """Advent of Code 2023 - Day 2 tasks"""
 
 import re
-import util
+
+# pylint: disable=import-error
+if __package__ is None or __package__ == '':
+    import util
+else:
+    from . import util
 
 
-def part_one():
+def part_one(lines):
     """
     --- Day 2: Cube Conundrum ---
     You're launched high into the atmosphere! The apex of your trajectory just barely reaches
@@ -51,16 +56,16 @@ def part_one():
     cubes, 13 green cubes, and 14 blue cubes. What is the sum of the IDs of those games?
     """
     total = 0
-    for line in util.get_lines('day02'):
+    for line in lines:
         if (get_max('red', line) <= 12
             and get_max('green', line) <= 13
                 and get_max('blue', line) <= 14):
             game_id = re.findall(r'Game (\d+)', line)[0]
             total += int(game_id)
-    print("Part one: " + str(total))
+    return total
 
 
-def part_two():
+def part_two(lines):
     """
     --- Part Two ---
     The Elf says they've stopped producing snow because they aren't getting any water! He isn't
@@ -94,12 +99,12 @@ def part_two():
     power of these sets?
     """
     total = 0
-    for line in util.get_lines('day02'):
+    for line in lines:
         max_red = get_max('red', line)
         max_green = get_max('green', line)
         max_blue = get_max('blue', line)
         total += (max_red * max_green * max_blue)
-    print("Part two: " + str(total))
+    return total
 
 
 def get_max(color, line):
@@ -116,5 +121,6 @@ def get_max(color, line):
     return max(map(int, re.findall(r'(\d+) '+color, line)))
 
 
-part_one()
-part_two()
+file_lines = util.get_lines('day02')
+print("Part one: " + str(part_one(file_lines)))
+print("Part two: " + str(part_two(file_lines)))
