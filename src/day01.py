@@ -46,8 +46,8 @@ def part_one():
     """
     total = 0
     for line in util.get_lines('day01'):
-        numbers = get_numbers(line)
-        total += int(numbers[0] + numbers[-1])
+        numbers = get_first_and_last_number_digits_only(line)
+        total += int(numbers)
     print("Part one: " + str(total))
 
 
@@ -75,54 +75,56 @@ def part_two():
     """
     total = 0
     for line in util.get_lines('day01'):
-        numbers = get_numbers(replace_first_and_last_written_numbers(line))
-        total += int(numbers[0] + numbers[-1])
+        numbers = get_first_and_last_number_digits_or_written(line)
+        total = total + int(numbers)
     print("Part two: " + str(total))
 
 
-def replace_first_and_last_written_numbers(line):
+def get_first_and_last_number_digits_only(line):
     """
-    Replaces written numbers in a given line with their corresponding numeric representation.
+    Extracts the first and last digits from a given line.
 
     Args:
-        line (str): The input line containing written numbers.
+        line (str): The input line containing digits.
 
     Returns:
-        str: The line with written numbers replaced by their numeric representation.
+        str: The first and last digits concatenated as a string.
     """
-    substrings = ['one', 'two', 'three', 'four',
-                  'five', 'six', 'seven', 'eight', 'nine']
-    found_substring = [sub for sub in substrings if sub in line]
-    if not found_substring:
-        return line
+    digits = ''.join(re.findall("\\d+", line))
+    return str(digits[0]) + str(digits[-1])
 
-    max_index = -1
+
+def get_first_and_last_number_digits_or_written(line):
+    """
+    Get the first and last occurrence of a number (digit or written) from a given line.
+
+    Args:
+        line (str): The input line.
+
+    Returns:
+        str: A string representing the concatenation of the indices of the
+             first and last occurrences of number (digit or written).
+    """
+    substrings = [
+        'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine',
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+    ]
     min_index = len(line)
+    max_index = -1
     first = ""
     last = ""
-    for substr in found_substring:
-        if line.find(substr) < min_index:
-            min_index = line.find(substr)
-            first = substr
-        if line.rfind(substr) > max_index:
-            max_index = line.rfind(substr)
-            last = substr
-    return (line
-            .replace(first, str(substrings.index(first)+1) + first, 1)
-            .replace(last, last + str(substrings.index(last) + 1)))
-
-
-def get_numbers(line):
-    """
-    Extracts all the numbers from a given string.
-
-    Args:
-        line (str): The input string.
-
-    Returns:
-        str: A string containing all the numbers found in the input string.
-    """
-    return ''.join(re.findall("\\d+", line))
+    for sub in substrings:
+        a = line.find(sub)
+        if (a != -1 and a < min_index):
+            min_index = a
+            first = sub
+        b = line.rfind(sub)
+        if (b != -1 and b > max_index):
+            max_index = b
+            last = sub
+    first_num = first if first.isdigit() else str(substrings.index(first) + 1)
+    last_num = last if last.isdigit() else str(substrings.index(last) + 1)
+    return first_num + last_num
 
 
 part_one()
