@@ -1,5 +1,6 @@
 """Advent of Code 2023 - Day 3 tasks"""
 
+from curses.ascii import isdigit
 import re
 
 # pylint: disable=import-error
@@ -64,6 +65,55 @@ def part_one(lines):
     return total
 
 
+def part_two(lines):
+    """
+    --- Part Two ---
+    The engineer finds the missing part and installs it in the engine! As the engine springs to
+    life, you jump in the closest gondola, finally ready to ascend to the water source.
+
+    You don't seem to be going very fast, though. Maybe something is still wrong? Fortunately,
+    the gondola has a phone labeled "help", so you pick it up and the engineer answers.
+
+    Before you can explain the situation, she suggests that you look out the window. There
+    stands the engineer, holding a phone in one hand and waving with the other. You're going
+    so slowly that you haven't even left the station. You exit the gondola.
+
+    The missing part wasn't the only issue - one of the gears in the engine is wrong. A gear is
+    any * symbol that is adjacent to exactly two part numbers. Its gear ratio is the result of
+    multiplying those two numbers together.
+
+    This time, you need to find the gear ratio of every gear and add them all up so that the
+    engineer can figure out which gear needs to be replaced.
+
+    Consider the same engine schematic again:
+
+    467..114..
+    ...*......
+    ..35..633.
+    ......#...
+    617*......
+    .....+.58.
+    ..592.....
+    ......755.
+    ...$.*....
+    .664.598..
+    In this schematic, there are two gears. The first is in the top left; it has part numbers
+    467 and 35, so its gear ratio is 16345. The second gear is in the lower right; its gear
+    ratio is 451490. (The * adjacent to 617 is not a gear because it is only adjacent to one
+    part number.) Adding up all of the gear ratios produces 467835.
+
+    What is the sum of all of the gear ratios in your engine schematic?
+    """
+    total = 0
+    for i, row in enumerate(lines):
+        for j, cell in enumerate(row):
+            if cell == '*':
+                adjacent_nums = get_adjacent_numbers(i, j, lines)
+                if len(adjacent_nums) == 2:
+                    total += int(adjacent_nums[0]) * int(adjacent_nums[1])
+    return total
+
+
 def check_if_number_is_adjacent_to_symbol(i, j, lines, number):
     """
     Checks if a number is adjacent to a symbol in the given lines of text.
@@ -84,10 +134,72 @@ def check_if_number_is_adjacent_to_symbol(i, j, lines, number):
             if jj < 0 or jj >= len(lines[ii]):
                 continue
             if re.search(r'[^\d.]', lines[ii][jj].strip()):
-                print(lines[ii][jj], number)
                 return True
     return False
 
 
+def get_adjacent_numbers(i, j, lines):
+    """
+    Get the adjacent numbers around a given position in a 2D grid.
+
+    Args:
+        i (int): The row index of the position.
+        j (int): The column index of the position.
+        lines (List[str]): The 2D grid represented as a list of strings.
+
+    Returns:
+        List[int]: A list of adjacent numbers.
+
+    """
+    adjacent = []
+    for ii in range(i-1, i+2):
+        if ii < 0 or ii >= len(lines):
+            continue
+        last_seen_col = -1
+        for jj in range(j-1, j+2):
+            if jj < 0 or jj >= len(lines[ii]):
+                continue
+            if jj < last_seen_col:
+                continue
+            if isdigit(lines[ii][jj]):
+                num, last_seen_col = resolve_whole_num(jj, lines[ii])
+                adjacent.append(num)
+    return adjacent
+
+
+def resolve_whole_num(i, line):
+    """
+    Resolves a whole number from a given position in a line.
+
+    Args:
+        i (int): The index of the character in the line.
+        line (str): The line of characters.
+
+    Returns:
+        tuple: A tuple containing the resolved whole number and the index of the last character in the number.
+    """
+    num = line[i]
+    reverse = i
+    while True:
+        if reverse == 0:
+            break
+        reverse -= 1
+        if isdigit(line[reverse]):
+            num = line[reverse] + num
+        else:
+            break
+    forward = i
+    while True:
+        if forward == len(line) - 1:
+            break
+        forward += 1
+        if isdigit(line[forward]):
+            num = num + line[forward]
+        else:
+            break
+    return (num, forward)
+
+
 file_lines = util.get_lines('day03')
 print("Part one: " + str(part_one(file_lines)))
+print("Part two: " + str(part_two(file_lines)))

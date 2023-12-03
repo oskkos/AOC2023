@@ -1,5 +1,5 @@
 """Advent of Code 2023 - Unit tests for day 3 tasks"""
-from ..day03 import part_one
+from ..day03 import part_one, part_two
 from .. import util
 
 
@@ -27,3 +27,34 @@ def test_part_one():
     ]
     assert part_one(example_data) == 4361
     assert part_one(util.get_lines('day03')) == 540131
+
+
+def test_part_two():
+    """
+    Test function for part_two.
+
+    This function tests the implementation of the part_two function by asserting the expected output
+    for different input scenarios.
+
+    Inputs:
+    - example_data: A list of strings representing the example data.
+    - util.get_lines('day03'): A list of strings representing the input data from 'day03' file.
+
+    Returns:
+    - None
+    """
+    example_data = [
+        "467..114..",
+        "...*......",
+        "..35..633.",
+        "......#...",
+        "617*......",
+        ".....+.58.",
+        "..592.....",
+        "......755.",
+        "...$.*....",
+        ".664.598.."
+    ]
+    assert part_two(example_data) == 467835
+    assert part_two(["10*20"]) == 200
+    assert part_two(util.get_lines('day03')) == 86879020
