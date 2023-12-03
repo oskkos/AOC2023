@@ -149,7 +149,6 @@ def get_adjacent_numbers(i, j, lines):
 
     Returns:
         List[int]: A list of adjacent numbers.
-
     """
     adjacent = []
     for ii in range(i-1, i+2):
@@ -179,25 +178,17 @@ def resolve_whole_num(i, line):
         tuple: A tuple containing the resolved whole number and the index of the last character in the number.
     """
     num = line[i]
-    reverse = i
-    while True:
-        if reverse == 0:
-            break
+    reverse = i - 1
+    while reverse >= 0 and isdigit(line[reverse]):
+        num = line[reverse] + num
         reverse -= 1
-        if isdigit(line[reverse]):
-            num = line[reverse] + num
-        else:
-            break
-    forward = i
-    while True:
-        if forward == len(line) - 1:
-            break
+
+    forward = i + 1
+    while forward < len(line) and isdigit(line[forward]):
+        num += line[forward]
         forward += 1
-        if isdigit(line[forward]):
-            num = num + line[forward]
-        else:
-            break
-    return (num, forward)
+
+    return num, forward
 
 
 file_lines = util.get_lines('day03')
