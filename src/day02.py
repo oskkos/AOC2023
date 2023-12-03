@@ -3,7 +3,7 @@
 import re
 
 # pylint: disable=import-error
-if __package__ is None or __package__ == '':
+if __package__ is None or not __package__:
     import util
 else:
     from . import util

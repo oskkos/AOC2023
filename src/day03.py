@@ -4,7 +4,7 @@ from curses.ascii import isdigit
 import re
 
 # pylint: disable=import-error
-if __package__ is None or __package__ == '':
+if __package__ is None or not __package__:
     import util
 else:
     from . import util
@@ -175,7 +175,8 @@ def resolve_whole_num(i, line):
         line (str): The line of characters.
 
     Returns:
-        tuple: A tuple containing the resolved whole number and the index of the last character in the number.
+        tuple: A tuple containing the resolved whole number and the index of the last
+               character in the number.
     """
     num = line[i]
     reverse = i - 1
