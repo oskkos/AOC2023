@@ -128,10 +128,10 @@ def check_if_number_is_adjacent_to_symbol(i, j, lines, number):
         bool: True if the number is adjacent to a symbol, False otherwise.
     """
     for ii in range(i-1, i+2):
-        if ii < 0 or ii >= len(lines):
+        if out_of_bounds(ii, lines):
             continue
         for jj in range(j-1, j+len(number)+1):
-            if jj < 0 or jj >= len(lines[ii]):
+            if out_of_bounds(jj, lines[ii]):
                 continue
             if re.search(r'[^\d.]', lines[ii][jj].strip()):
                 return True
@@ -152,11 +152,11 @@ def get_adjacent_numbers(i, j, lines):
     """
     adjacent = []
     for ii in range(i-1, i+2):
-        if ii < 0 or ii >= len(lines):
+        if out_of_bounds(ii, lines):
             continue
         last_seen_col = -1
         for jj in range(j-1, j+2):
-            if jj < 0 or jj >= len(lines[ii]):
+            if out_of_bounds(jj, lines[ii]):
                 continue
             if jj < last_seen_col:
                 continue
@@ -165,6 +165,19 @@ def get_adjacent_numbers(i, j, lines):
                 adjacent.append(num)
     return adjacent
 
+
+def out_of_bounds(index, items):
+    """
+    Check if the given index is out of bounds for the given list of items.
+
+    Args:
+        index (int): The index to check.
+        items (list): The list of items.
+
+    Returns:
+        bool: True if the index is out of bounds, False otherwise.
+    """
+    return index < 0 or index >= len(items)
 
 def resolve_whole_num(i, line):
     """
