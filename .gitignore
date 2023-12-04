@@ -1,6 +1,8 @@
 .vscode
 **/__pycache__
 src/inputs/temp.txt
-sonar.sh
 .scannerwork
 .coverage
+coverage.xml
+test_report.xml
+.env
