@@ -205,6 +205,7 @@ def resolve_whole_num(i, line):
     return num, forward
 
 
-file_lines = util.get_lines('day03')
-print("Part one: " + str(part_one(file_lines)))
-print("Part two: " + str(part_two(file_lines)))
+if __name__ == "__main__":
+    file_lines = util.get_lines('day03')
+    print("Part one: " + str(part_one(file_lines)))
+    print("Part two: " + str(part_two(file_lines)))

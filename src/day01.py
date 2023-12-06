@@ -131,6 +131,7 @@ def get_first_and_last_number_digits_or_written(line):
     return first_num + last_num
 
 
-file_lines = util.get_lines('day01')
-print("Part one: " + str(part_one(file_lines)))
-print("Part two: " + str(part_two(file_lines)))
+if __name__ == "__main__":
+    file_lines = util.get_lines('day01')
+    print("Part one: " + str(part_one(file_lines)))
+    print("Part two: " + str(part_two(file_lines)))

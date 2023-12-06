@@ -174,6 +174,7 @@ def add_card(cards, card_nbr):
         cards[card_nbr] += 1
 
 
-file_lines = util.get_lines('day04')
-print("Part one: " + str(part_one(file_lines)))
-print("Part two: " + str(part_two(file_lines)))
+if __name__ == "__main__":
+    file_lines = util.get_lines('day04')
+    print("Part one: " + str(part_one(file_lines)))
+    print("Part two: " + str(part_two(file_lines)))

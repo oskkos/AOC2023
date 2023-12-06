@@ -121,6 +121,7 @@ def get_max(color, line):
     return max(map(int, re.findall(r'(\d+) '+color, line)))
 
 
-file_lines = util.get_lines('day02')
-print("Part one: " + str(part_one(file_lines)))
-print("Part two: " + str(part_two(file_lines)))
+if __name__ == "__main__":
+    file_lines = util.get_lines('day02')
+    print("Part one: " + str(part_one(file_lines)))
+    print("Part two: " + str(part_two(file_lines)))
