@@ -28,6 +28,29 @@ def part_one(lines):
         total += next_val
     return total
 
+def part_two(lines):
+    """
+    Calculates the sum of the last values in each sequence obtained from the input lines.
+
+    Args:
+        lines (list): A list of strings representing the input lines.
+
+    Returns:
+        int: The sum of the last values in each sequence.
+    """
+    total = 0
+    for line in lines:
+        nums = list(map(int, re.findall(r'(-?\d+)', line)))  # Convert strings to integers
+        sequences = get_sequences(nums)
+        first_values = [seq[0] for seq in sequences]  # Retrieve the first value from each sequence
+        first_values = list(reversed(first_values))
+        extrapolated = 0
+        for value in first_values:
+            extrapolated = value - extrapolated
+
+        total += extrapolated
+    return total
+
 
 def calc_differences(nums):
     """
@@ -63,3 +86,4 @@ def get_sequences(nums):
 
 if __name__ == "__main__":
     print("Part one: " + str(part_one(util.get_lines('day09'))))
+    print("Part two: " + str(part_two(util.get_lines('day09'))))
