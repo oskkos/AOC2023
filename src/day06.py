@@ -14,30 +14,32 @@ def part_one(lines):
     part one
     """
     total = 1
-    times = re.findall(r'\d+', lines[0])
-    distances = re.findall(r'\d+', lines[1])
-    for (i, time) in enumerate(times):
+    times = re.findall(r"\d+", lines[0])
+    distances = re.findall(r"\d+", lines[1])
+    for i, time in enumerate(times):
         min_time = calc_min_hold_time(int(time), int(distances[i]))
         max_time = calc_max_hold_time(int(time), int(distances[i]))
         total = total * len(range(min_time, max_time + 1))
     return total
+
 
 def part_two(lines):
     """
     part two
     """
 
-    times = re.findall(r'\d+', lines[0])
-    distances = re.findall(r'\d+', lines[1])
-    time=""
-    distance=""
-    for (i, xx) in enumerate(times):
+    times = re.findall(r"\d+", lines[0])
+    distances = re.findall(r"\d+", lines[1])
+    time = ""
+    distance = ""
+    for i, xx in enumerate(times):
         time += xx
         distance += distances[i]
     min_time = calc_min_hold_time(int(time), int(distance))
     max_time = calc_max_hold_time(int(time), int(distance))
     total = len(range(min_time, max_time + 1))
     return total
+
 
 def calc_min_hold_time(time, distance):
     """
@@ -60,6 +62,7 @@ def calc_min_hold_time(time, distance):
             return min_hold_time
         min_hold_time += 1
     return -1
+
 
 def calc_max_hold_time(time, distance):
     """
@@ -85,6 +88,6 @@ def calc_max_hold_time(time, distance):
 
 
 if __name__ == "__main__":
-    file_lines = util.get_lines('day06')
+    file_lines = util.get_lines("day06")
     print("Part one: " + str(part_one(file_lines)))
     print("Part two: " + str(part_two(file_lines)))

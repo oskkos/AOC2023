@@ -57,10 +57,12 @@ def part_one(lines):
     """
     total = 0
     for line in lines:
-        if (get_max('red', line) <= 12
-            and get_max('green', line) <= 13
-                and get_max('blue', line) <= 14):
-            game_id = re.findall(r'Game (\d+)', line)[0]
+        if (
+            get_max("red", line) <= 12
+            and get_max("green", line) <= 13
+            and get_max("blue", line) <= 14
+        ):
+            game_id = re.findall(r"Game (\d+)", line)[0]
             total += int(game_id)
     return total
 
@@ -90,7 +92,7 @@ def part_two(lines):
     * Game 3 must have been played with at least 20 red, 13 green, and 6 blue cubes.
     * Game 4 required at least 14 red, 3 green, and 15 blue cubes.
     * Game 5 needed no fewer than 6 red, 3 green, and 2 blue cubes in the bag.
-    
+
     The power of a set of cubes is equal to the numbers of red, green, and blue cubes multiplied
     together. The power of the minimum set of cubes in game 1 is 48. In games 2-5 it was 12, 1560,
     630, and 36, respectively. Adding up these five powers produces the sum 2286.
@@ -100,10 +102,10 @@ def part_two(lines):
     """
     total = 0
     for line in lines:
-        max_red = get_max('red', line)
-        max_green = get_max('green', line)
-        max_blue = get_max('blue', line)
-        total += (max_red * max_green * max_blue)
+        max_red = get_max("red", line)
+        max_green = get_max("green", line)
+        max_blue = get_max("blue", line)
+        total += max_red * max_green * max_blue
     return total
 
 
@@ -118,10 +120,10 @@ def get_max(color, line):
     Returns:
     int: The maximum value of the specified color in the line.
     """
-    return max(map(int, re.findall(r'(\d+) '+color, line)))
+    return max(map(int, re.findall(r"(\d+) " + color, line)))
 
 
 if __name__ == "__main__":
-    file_lines = util.get_lines('day02')
+    file_lines = util.get_lines("day02")
     print("Part one: " + str(part_one(file_lines)))
     print("Part two: " + str(part_two(file_lines)))

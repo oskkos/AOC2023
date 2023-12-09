@@ -1,6 +1,6 @@
 """Advent of Code 2023 - Unit tests for day 9 tasks"""
-from ..day09 import part_one, part_two
 from .. import util
+from ..day09 import part_one, part_two
 
 
 def test_part_one():
@@ -13,13 +13,10 @@ def test_part_one():
     Returns:
         None
     """
-    example_data = [
-    "0 3 6 9 12 15",
-    "1 3 6 10 15 21",
-    "10 13 16 21 30 45"
-    ]
+    example_data = ["0 3 6 9 12 15", "1 3 6 10 15 21", "10 13 16 21 30 45"]
     assert part_one(example_data) == 114
-    assert part_one(util.get_lines('day09')) == 1898776583
+    assert part_one(util.get_lines("day09")) == 1898776583
+
 
 def test_part_two():
     """
@@ -31,10 +28,6 @@ def test_part_two():
     Returns:
         None
     """
-    example_data = [
-        "0 3 6 9 12 15",
-        "1 3 6 10 15 21",
-        "10 13 16 21 30 45"
-    ]
+    example_data = ["0 3 6 9 12 15", "1 3 6 10 15 21", "10 13 16 21 30 45"]
     assert part_two(example_data) == 2
-    assert part_two(util.get_lines('day09')) == 1100
+    assert part_two(util.get_lines("day09")) == 1100

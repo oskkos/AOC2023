@@ -67,9 +67,8 @@ def part_one(lines):
     """
     total = 0
     for line in lines:
-        winners = re.findall(r'\d+', line.split('|')
-                             [0].split(':')[1].strip())
-        cards = re.findall(r'\d+', line.split('|')[1].strip())
+        winners = re.findall(r"\d+", line.split("|")[0].split(":")[1].strip())
+        cards = re.findall(r"\d+", line.split("|")[1].strip())
         matches = list(set(winners).intersection(cards))
         if matches:
             total += 2 ** (len(matches) - 1)
@@ -124,18 +123,16 @@ def part_two(lines):
     """
     all_cards = {}
     for line in lines:
-        winners = re.findall(r'\d+', line.split('|')
-                             [0].split(':')[1].strip())
-        cards = re.findall(r'\d+', line.split('|')[1].strip())
+        winners = re.findall(r"\d+", line.split("|")[0].split(":")[1].strip())
+        cards = re.findall(r"\d+", line.split("|")[1].strip())
         matches = list(set(winners).intersection(cards))
-        card_nbr = int(re.findall(r'\d+', line.split(':')[0].strip())[0])
+        card_nbr = int(re.findall(r"\d+", line.split(":")[0].strip())[0])
 
         add_card(all_cards, card_nbr)
 
         copy_rounds = all_cards.get(card_nbr, 0)
         for _ in range(copy_rounds):
-            add_cards(all_cards, list(
-                range(card_nbr + 1, card_nbr + len(matches) + 1)))
+            add_cards(all_cards, list(range(card_nbr + 1, card_nbr + len(matches) + 1)))
     return sum(all_cards.values())
 
 
@@ -175,6 +172,6 @@ def add_card(cards, card_nbr):
 
 
 if __name__ == "__main__":
-    file_lines = util.get_lines('day04')
+    file_lines = util.get_lines("day04")
     print("Part one: " + str(part_one(file_lines)))
     print("Part two: " + str(part_two(file_lines)))

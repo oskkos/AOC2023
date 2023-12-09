@@ -73,7 +73,7 @@ def part_two(lines):
     4nineeightseven2
     zoneight234
     7pqrstsixteen
-    In this example, the calibration values are 29, 83, 13, 24, 42, 14, and 76. Adding these 
+    In this example, the calibration values are 29, 83, 13, 24, 42, 14, and 76. Adding these
     together produces 281.
 
     What is the sum of all of the calibration values?
@@ -83,6 +83,7 @@ def part_two(lines):
         numbers = get_first_and_last_number_digits_or_written(line)
         total = total + int(numbers)
     return total
+
 
 def get_first_and_last_number_digits_only(line):
     """
@@ -94,7 +95,7 @@ def get_first_and_last_number_digits_only(line):
     Returns:
         str: The first and last digits concatenated as a string.
     """
-    digits = ''.join(re.findall("\\d+", line))
+    digits = "".join(re.findall("\\d+", line))
     return str(digits[0]) + str(digits[-1])
 
 
@@ -110,8 +111,25 @@ def get_first_and_last_number_digits_or_written(line):
              first and last occurrences of number (digit or written).
     """
     substrings = [
-        'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine',
-        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+        "one",
+        "two",
+        "three",
+        "four",
+        "five",
+        "six",
+        "seven",
+        "eight",
+        "nine",
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
     ]
     min_index = len(line)
     max_index = -1
@@ -119,11 +137,11 @@ def get_first_and_last_number_digits_or_written(line):
     last = ""
     for sub in substrings:
         a = line.find(sub)
-        if (a != -1 and a < min_index):
+        if a != -1 and a < min_index:
             min_index = a
             first = sub
         b = line.rfind(sub)
-        if (b != -1 and b > max_index):
+        if b != -1 and b > max_index:
             max_index = b
             last = sub
     first_num = first if first.isdigit() else str(substrings.index(first) + 1)
@@ -132,6 +150,6 @@ def get_first_and_last_number_digits_or_written(line):
 
 
 if __name__ == "__main__":
-    file_lines = util.get_lines('day01')
+    file_lines = util.get_lines("day01")
     print("Part one: " + str(part_one(file_lines)))
     print("Part two: " + str(part_two(file_lines)))

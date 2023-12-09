@@ -1,6 +1,6 @@
 """Advent of Code 2023 - Unit tests for day 5 tasks"""
-from ..day05 import part_one, part_two
 from .. import util
+from ..day05 import part_one, part_two
 
 example_data = """seeds: 79 14 55 13
 
@@ -35,8 +35,12 @@ temperature-to-humidity map:
 humidity-to-location map:
 60 56 37
 56 93 4
-""".split('\n')
+""".split(
+    "\n"
+)
 print(example_data)
+
+
 def test_part_one():
     """
     Test function for part_one.
@@ -49,7 +53,7 @@ def test_part_one():
     """
 
     assert part_one(example_data) == 35
-    assert part_one(util.get_lines('day05')) == 265018614
+    assert part_one(util.get_lines("day05")) == 265018614
 
 
 def test_part_two():
@@ -64,4 +68,4 @@ def test_part_two():
     """
 
     assert part_two(example_data) == 46
-    #assert part_two(util.get_lines('day05')) == 63179500
+    # assert part_two(util.get_lines('day05')) == 63179500

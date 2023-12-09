@@ -21,12 +21,13 @@ def part_one(lines):
     """
     total = 0
     for line in lines:
-        nums = list(map(int, re.findall(r'(-?\d+)', line)))  # Convert strings to integers
+        nums = list(map(int, re.findall(r"(-?\d+)", line)))  # Convert strings to integers
         sequences = get_sequences(nums)
         last_values = [seq[-1] for seq in sequences]  # Retrieve the last value from each sequence
         next_val = sum(last_values)
         total += next_val
     return total
+
 
 def part_two(lines):
     """
@@ -40,7 +41,7 @@ def part_two(lines):
     """
     total = 0
     for line in lines:
-        nums = list(map(int, re.findall(r'(-?\d+)', line)))  # Convert strings to integers
+        nums = list(map(int, re.findall(r"(-?\d+)", line)))  # Convert strings to integers
         sequences = get_sequences(nums)
         first_values = [seq[0] for seq in sequences]  # Retrieve the first value from each sequence
         first_values = list(reversed(first_values))
@@ -64,8 +65,9 @@ def calc_differences(nums):
     """
     differences = []
     for i in range(len(nums) - 1):
-        differences.append(nums[i+1] - nums[i])
+        differences.append(nums[i + 1] - nums[i])
     return differences
+
 
 def get_sequences(nums):
     """
@@ -84,6 +86,7 @@ def get_sequences(nums):
         sequences.append(nums)
     return sequences
 
+
 if __name__ == "__main__":
-    print("Part one: " + str(part_one(util.get_lines('day09'))))
-    print("Part two: " + str(part_two(util.get_lines('day09'))))
+    print("Part one: " + str(part_one(util.get_lines("day09"))))
+    print("Part two: " + str(part_two(util.get_lines("day09"))))

@@ -10,7 +10,6 @@ def get_lines(file_name):
     Returns:
         list: A list of strings representing the lines from the input file.
     """
-    file_path = os.path.dirname(
-        os.path.abspath(__file__)) + '/inputs/' + file_name + '.txt'
+    file_path = os.path.dirname(os.path.abspath(__file__)) + "/inputs/" + file_name + ".txt"
     with open(file_path, "r", encoding="utf-8") as file:
         return file.readlines()

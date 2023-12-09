@@ -21,8 +21,7 @@ def part_one(lines):
         int: The result of part one.
     """
     instructions, mapping = instructions_and_mapping(lines)
-    return runner(instructions, mapping, 'AAA', 'ZZZ')
-
+    return runner(instructions, mapping, "AAA", "ZZZ")
 
 
 def part_two(lines):
@@ -39,13 +38,14 @@ def part_two(lines):
     instructions, mapping = instructions_and_mapping(lines)
     filtered_mapping = {}
     for key, value in mapping.items():
-        if key.endswith('A'):
+        if key.endswith("A"):
             filtered_mapping[key] = value
 
     current = filtered_mapping.keys()
 
-    lcms = [runner(instructions, mapping, node, 'Z') for node in current]
+    lcms = [runner(instructions, mapping, node, "Z") for node in current]
     return lcm(*lcms)
+
 
 def instructions_and_mapping(lines):
     """
@@ -63,7 +63,7 @@ def instructions_and_mapping(lines):
     for line in lines:
         if not line.strip():
             continue
-        chunks = re.findall(r'[\dA-Z]+', line)
+        chunks = re.findall(r"[\dA-Z]+", line)
         mapping[chunks.pop(0)] = chunks
     return instructions, mapping
 
@@ -86,17 +86,18 @@ def runner(instructions, mapping, current, ending):
     pos = 0
     while True:
         direction = instructions[pos]
-        next_seq = mapping[current][0 if direction == 'L' else 1]
-        steps +=1
+        next_seq = mapping[current][0 if direction == "L" else 1]
+        steps += 1
 
         if next_seq.endswith(ending):
             return steps
 
         current = next_seq
-        pos +=1
+        pos += 1
         if pos == len(instructions):
             pos = 0
 
+
 if __name__ == "__main__":
-    print("Part one: " + str(part_one(util.get_lines('day08'))))
-    print("Part two: " + str(part_two(util.get_lines('day08'))))
+    print("Part one: " + str(part_one(util.get_lines("day08"))))
+    print("Part two: " + str(part_two(util.get_lines("day08"))))
