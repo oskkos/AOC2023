@@ -3,13 +3,13 @@
 import re
 
 # pylint: disable=import-error
-if __package__ is None or not __package__:
-    import util
+if not __package__:
+    import util  # type: ignore
 else:
     from . import util
 
 
-def part_one(lines):
+def part_one(lines: list[str]) -> int:
     """
     -- Day 4: Scratchcards ---
     The gondola takes you up. Strangely, though, the ground doesn't seem to be coming with you;
@@ -75,7 +75,7 @@ def part_one(lines):
     return total
 
 
-def part_two(lines):
+def part_two(lines: list[str]) -> int:
     """
     --- Part Two ---
     Just as you're about to report your findings to the Elf, one of you realizes that the rules
@@ -121,7 +121,7 @@ def part_two(lines):
     Process all of the original and copied scratchcards until no more scratchcards are won.
     Including the original set of scratchcards, how many total scratchcards do you end up with?
     """
-    all_cards = {}
+    all_cards: dict[int, int] = {}
     for line in lines:
         winners = re.findall(r"\d+", line.split("|")[0].split(":")[1].strip())
         cards = re.findall(r"\d+", line.split("|")[1].strip())
@@ -136,7 +136,7 @@ def part_two(lines):
     return sum(all_cards.values())
 
 
-def add_cards(cards, subsequent_cards):
+def add_cards(cards: dict[int, int], subsequent_cards: list[int]) -> None:
     """
     Add subsequent cards to the list of cards.
 
@@ -151,7 +151,7 @@ def add_cards(cards, subsequent_cards):
         add_card(cards, int(match))
 
 
-def add_card(cards, card_nbr):
+def add_card(cards: dict[int, int], card_nbr: int) -> None:
     """
     Add a card number to the cards dictionary.
 

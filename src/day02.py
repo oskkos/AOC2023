@@ -3,13 +3,13 @@
 import re
 
 # pylint: disable=import-error
-if __package__ is None or not __package__:
-    import util
+if not __package__:
+    import util  # type: ignore
 else:
     from . import util
 
 
-def part_one(lines):
+def part_one(lines: list[str]) -> int:
     """
     --- Day 2: Cube Conundrum ---
     You're launched high into the atmosphere! The apex of your trajectory just barely reaches
@@ -67,7 +67,7 @@ def part_one(lines):
     return total
 
 
-def part_two(lines):
+def part_two(lines: list[str]) -> int:
     """
     --- Part Two ---
     The Elf says they've stopped producing snow because they aren't getting any water! He isn't
@@ -109,7 +109,7 @@ def part_two(lines):
     return total
 
 
-def get_max(color, line):
+def get_max(color: str, line: str) -> int:
     """
     Returns the maximum value of a specific color in a line.
 

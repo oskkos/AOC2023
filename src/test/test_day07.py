@@ -5,7 +5,7 @@ from ..day07 import part_one, part_two
 example_data = ["32T3K 765", "T55J5 684", "KK677 28", "KTJJT 220", "QQQJA 483"]
 
 
-def test_part_one():
+def test_part_one() -> None:
     """
     Test function for part_one.
 
@@ -19,7 +19,7 @@ def test_part_one():
     assert part_one(util.get_lines("day07")) == 249638405
 
 
-def test_part_two():
+def test_part_two() -> None:
     """
     Test function for the part_two() function.
 

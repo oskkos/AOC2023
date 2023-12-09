@@ -2,7 +2,9 @@
 from .. import util
 from ..day05 import part_one, part_two
 
-example_data = """seeds: 79 14 55 13
+example_data: list[
+    str
+] = """seeds: 79 14 55 13
 
 seed-to-soil map:
 50 98 2
@@ -38,10 +40,9 @@ humidity-to-location map:
 """.split(
     "\n"
 )
-print(example_data)
 
 
-def test_part_one():
+def test_part_one() -> None:
     """
     Test function for part_one.
 
@@ -56,7 +57,7 @@ def test_part_one():
     assert part_one(util.get_lines("day05")) == 265018614
 
 
-def test_part_two():
+def test_part_two() -> None:
     """
     Test function for the part_two() function.
 

@@ -3,13 +3,13 @@
 import re
 
 # pylint: disable=import-error
-if __package__ is None or not __package__:
-    import util
+if not __package__:
+    import util  # type: ignore
 else:
     from . import util
 
 
-def part_one(lines):
+def part_one(lines: list[str]) -> int:
     """
     --- Day 1: Trebuchet?! ---
     Something is wrong with global snow production, and you've been selected to take a look.
@@ -56,7 +56,7 @@ def part_one(lines):
     return total
 
 
-def part_two(lines):
+def part_two(lines: list[str]) -> int:
     """
     --- Part Two ---
     Your calculation isn't quite right. It looks like some of the digits are actually spelled out
@@ -85,7 +85,7 @@ def part_two(lines):
     return total
 
 
-def get_first_and_last_number_digits_only(line):
+def get_first_and_last_number_digits_only(line: str) -> str:
     """
     Extracts the first and last digits from a given line.
 
@@ -99,7 +99,7 @@ def get_first_and_last_number_digits_only(line):
     return str(digits[0]) + str(digits[-1])
 
 
-def get_first_and_last_number_digits_or_written(line):
+def get_first_and_last_number_digits_or_written(line: str) -> str:
     """
     Get the first and last occurrence of a number (digit or written) from a given line.
 

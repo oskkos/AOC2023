@@ -3,7 +3,7 @@ from .. import util
 from ..day01 import part_one, part_two
 
 
-def test_part_one():
+def test_part_one() -> None:
     """
     Test function for part_one.
 
@@ -18,7 +18,7 @@ def test_part_one():
     assert part_one(util.get_lines("day01")) == 55029
 
 
-def test_part_two():
+def test_part_two() -> None:
     """
     Test function for part_two.
 

@@ -1,15 +1,15 @@
-"""Advent of Code 2023 - Day 8 tasks"""
+"""Advent of Code 2023 - Day 9 tasks"""
 
 import re
 
 # pylint: disable=import-error
-if __package__ is None or not __package__:
-    import util
+if not __package__:
+    import util  # type: ignore
 else:
     from . import util
 
 
-def part_one(lines):
+def part_one(lines: list[str]) -> int:
     """
     Calculates the sum of the last values in each sequence obtained from the input lines.
 
@@ -21,15 +21,19 @@ def part_one(lines):
     """
     total = 0
     for line in lines:
-        nums = list(map(int, re.findall(r"(-?\d+)", line)))  # Convert strings to integers
+        nums = list(
+            map(int, re.findall(r"(-?\d+)", line))
+        )  # Convert strings to integers
         sequences = get_sequences(nums)
-        last_values = [seq[-1] for seq in sequences]  # Retrieve the last value from each sequence
+        last_values = [
+            seq[-1] for seq in sequences
+        ]  # Retrieve the last value from each sequence
         next_val = sum(last_values)
         total += next_val
     return total
 
 
-def part_two(lines):
+def part_two(lines: list[str]) -> int:
     """
     Calculates the sum of the last values in each sequence obtained from the input lines.
 
@@ -41,9 +45,13 @@ def part_two(lines):
     """
     total = 0
     for line in lines:
-        nums = list(map(int, re.findall(r"(-?\d+)", line)))  # Convert strings to integers
+        nums = list(
+            map(int, re.findall(r"(-?\d+)", line))
+        )  # Convert strings to integers
         sequences = get_sequences(nums)
-        first_values = [seq[0] for seq in sequences]  # Retrieve the first value from each sequence
+        first_values = [
+            seq[0] for seq in sequences
+        ]  # Retrieve the first value from each sequence
         first_values = list(reversed(first_values))
         extrapolated = 0
         for value in first_values:
@@ -53,7 +61,7 @@ def part_two(lines):
     return total
 
 
-def calc_differences(nums):
+def calc_differences(nums: list[int]) -> list[int]:
     """
     Calculate the differences between consecutive numbers in a list.
 
@@ -63,13 +71,13 @@ def calc_differences(nums):
     Returns:
         list: A list of differences between consecutive numbers.
     """
-    differences = []
+    differences: list[int] = []
     for i in range(len(nums) - 1):
         differences.append(nums[i + 1] - nums[i])
     return differences
 
 
-def get_sequences(nums):
+def get_sequences(nums: list[int]) -> list[list[int]]:
     """
     Get sequences of numbers by repeatedly calculating differences until all
     numbers in the sequence are the same.

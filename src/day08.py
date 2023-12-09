@@ -4,13 +4,13 @@ import re
 from math import lcm
 
 # pylint: disable=import-error
-if __package__ is None or not __package__:
-    import util
+if not __package__:
+    import util  # type: ignore
 else:
     from . import util
 
 
-def part_one(lines):
+def part_one(lines: list[str]) -> int:
     """
     Calculate the result of part one of the puzzle.
 
@@ -24,7 +24,7 @@ def part_one(lines):
     return runner(instructions, mapping, "AAA", "ZZZ")
 
 
-def part_two(lines):
+def part_two(lines: list[str]) -> int:
     """
     Calculate the least common multiple (LCM) of the execution times of all nodes
     ending with 'A' in the given instructions.
@@ -36,7 +36,7 @@ def part_two(lines):
         int: The least common multiple (LCM) of the execution times.
     """
     instructions, mapping = instructions_and_mapping(lines)
-    filtered_mapping = {}
+    filtered_mapping: dict[str, list[str]] = {}
     for key, value in mapping.items():
         if key.endswith("A"):
             filtered_mapping[key] = value
@@ -47,7 +47,7 @@ def part_two(lines):
     return lcm(*lcms)
 
 
-def instructions_and_mapping(lines):
+def instructions_and_mapping(lines: list[str]) -> tuple[str, dict[str, list[str]]]:
     """
     Extracts instructions and creates a mapping from the given lines.
 
@@ -59,16 +59,18 @@ def instructions_and_mapping(lines):
 
     """
     instructions = lines.pop(0).strip()
-    mapping = {}
+    mapping: dict[str, list[str]] = {}
     for line in lines:
         if not line.strip():
             continue
-        chunks = re.findall(r"[\dA-Z]+", line)
+        chunks: list[str] = re.findall(r"[\dA-Z]+", line)
         mapping[chunks.pop(0)] = chunks
     return instructions, mapping
 
 
-def runner(instructions, mapping, current, ending):
+def runner(
+    instructions: str, mapping: dict[str, list[str]], current: str, ending: str
+) -> int:
     """
     Runs the instructions on the mapping to find the number of steps required to
     reach a sequence ending with the specified ending.

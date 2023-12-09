@@ -3,13 +3,13 @@
 import re
 
 # pylint: disable=import-error
-if __package__ is None or not __package__:
-    import util
+if not __package__:
+    import util  # type: ignore
 else:
     from . import util
 
 
-def part_one(lines):
+def part_one(lines: list[str]) -> int:
     """
     part one
     """
@@ -23,7 +23,7 @@ def part_one(lines):
     return total
 
 
-def part_two(lines):
+def part_two(lines: list[str]) -> int:
     """
     part two
     """
@@ -41,7 +41,7 @@ def part_two(lines):
     return total
 
 
-def calc_min_hold_time(time, distance):
+def calc_min_hold_time(time: int, distance: int) -> int:
     """
     Calculates the minimum hold time required to travel a given distance within a given time.
 
@@ -64,7 +64,7 @@ def calc_min_hold_time(time, distance):
     return -1
 
 
-def calc_max_hold_time(time, distance):
+def calc_max_hold_time(time: int, distance: int) -> int:
     """
     Calculates the maximum hold time for a given time and distance.
 

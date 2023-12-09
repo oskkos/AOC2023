@@ -1,29 +1,33 @@
 """Advent of Code 2023 - Day 5 tasks"""
 
 import re
+from typing import NewType
+
+SingleMapping = NewType("SingleMapping", dict[int, dict[str, int]])
+Mapping = NewType("Mapping", dict[str, SingleMapping])
 
 # pylint: disable=import-error
-if __package__ is None or not __package__:
-    import util
+if not __package__:
+    import util  # type: ignore
 else:
     from . import util
 
 
-def part_one(lines):
+def part_one(lines: list[str]) -> int:
     """
     part one
     """
     return runner(lines, False)
 
 
-def part_two(lines):
+def part_two(lines: list[str]) -> int:
     """
     part one
     """
     return runner(lines, True)
 
 
-def runner(lines, seeds_as_range):
+def runner(lines: list[str], seeds_as_range: bool) -> int:
     """
     Runs the mapping algorithm based on the given lines and seeds.
 
@@ -34,8 +38,8 @@ def runner(lines, seeds_as_range):
     Returns:
         int: The minimum location value obtained from the mapping algorithm.
     """
-    seeds = []
-    mapping = {}
+    seeds: list[str] | list[range] = []  # type: ignore
+    mapping: Mapping = Mapping({})
     current_map = ""
     for line in lines:
         if line.split(":")[0] == "seeds":
@@ -44,17 +48,20 @@ def runner(lines, seeds_as_range):
         current_map = resolve_current_map(current_map, line)
         map_values = re.findall(r"\d+", line)
         update_mapping(mapping, current_map, map_values)
-    locations = []
+
+    # Cast the dictionary to the Mapping type
+    mapping = Mapping(mapping)
+    locations: list[int] = []
     for _, seed in enumerate(seeds):
         if isinstance(seed, range):
             # print(f"range: {_+1}/{len(seeds)}, {seed}")
             locations.extend([traverse_mapping(mapping, x) for x in seed])
         else:
-            locations.append(traverse_mapping(mapping, int(seed)))
+            locations.append(traverse_mapping(mapping, int(seed)))  # type: ignore
     return min(locations)
 
 
-def traverse_mapping(mapping, seed):
+def traverse_mapping(mapping: Mapping, seed: int) -> int:
     """
     Traverses the mapping to determine the location based on the given seed.
 
@@ -77,7 +84,7 @@ def traverse_mapping(mapping, seed):
 
 
 # pylint: disable-next=too-many-return-statements
-def resolve_current_map(current_map, line):
+def resolve_current_map(current_map: str, line: str) -> str:
     """
     Resolves the current map based on the given line.
 
@@ -105,7 +112,7 @@ def resolve_current_map(current_map, line):
     return current_map
 
 
-def update_mapping(mapping, current_map, values):
+def update_mapping(mapping: Mapping, current_map: str, values: list[str]) -> None:
     """
     Update the mapping dictionary with the given values for the current_map.
 
@@ -119,13 +126,16 @@ def update_mapping(mapping, current_map, values):
     """
     if len(values) != 3:
         return
-    current_map_mapping = mapping.get(current_map, {})
+    current_map_mapping: SingleMapping = mapping.get(current_map, SingleMapping({}))
     destination, source, length = values
-    current_map_mapping[int(source)] = {"destination": int(destination), "length": int(length)}
+    current_map_mapping[int(source)] = {
+        "destination": int(destination),
+        "length": int(length),
+    }
     mapping[current_map] = current_map_mapping
 
 
-def get_destination(mapping, source):
+def get_destination(mapping: SingleMapping, source: int) -> int:
     """
     Get the destination corresponding to the given source based on the provided mapping.
 
@@ -144,7 +154,7 @@ def get_destination(mapping, source):
     return source
 
 
-def get_seeds(seeds_line, ranges):
+def get_seeds(seeds_line: str, ranges: bool) -> list[str] | list[range]:
     """
     Extracts seeds from a line and returns them as a list of integers.
 
@@ -155,11 +165,11 @@ def get_seeds(seeds_line, ranges):
     Returns:
     list: A list of integers representing the seeds.
     """
-    nums = re.findall(r"\d+", seeds_line.split(":")[1])
+    nums: list[str] = re.findall(r"\d+", seeds_line.split(":")[1])
     if not ranges:
         return nums
 
-    seed_ranges = []
+    seed_ranges: list[range] = []
     for i in range(0, len(nums), 2):
         seed_range = range(int(nums[i]), int(nums[i]) + int(nums[i + 1]))
         seed_ranges.append(seed_range)

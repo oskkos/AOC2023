@@ -3,7 +3,7 @@
 import os
 
 
-def get_lines(file_name):
+def get_lines(file_name: str) -> list[str]:
     """
     Read the lines from the input file and return them as a list.
 

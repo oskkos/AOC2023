@@ -4,13 +4,13 @@ import re
 from curses.ascii import isdigit
 
 # pylint: disable=import-error
-if __package__ is None or not __package__:
-    import util
+if not __package__:
+    import util  # type: ignore
 else:
     from . import util
 
 
-def part_one(lines):
+def part_one(lines: list[str]) -> int:
     """
     --- Day 3: Gear Ratios ---
         You and the Elf eventually reach a gondola lift station; he says the gondola lift will take
@@ -67,7 +67,7 @@ def part_one(lines):
     return total
 
 
-def part_two(lines):
+def part_two(lines: list[str]) -> int:
     """
     --- Part Two ---
     The engineer finds the missing part and installs it in the engine! As the engine springs to
@@ -110,13 +110,15 @@ def part_two(lines):
     for i, row in enumerate(lines):
         for j, cell in enumerate(row):
             if cell == "*":
-                adjacent_nums = get_adjacent_numbers(i, j, lines)
+                adjacent_nums: list[int] = get_adjacent_numbers(i, j, lines)
                 if len(adjacent_nums) == 2:
                     total += int(adjacent_nums[0]) * int(adjacent_nums[1])
     return total
 
 
-def check_if_number_is_adjacent_to_symbol(i, j, lines, number):
+def check_if_number_is_adjacent_to_symbol(
+    i: int, j: int, lines: list[str], number: str
+) -> bool:
     """
     Checks if a number is adjacent to a symbol in the given lines of text.
 
@@ -140,7 +142,7 @@ def check_if_number_is_adjacent_to_symbol(i, j, lines, number):
     return False
 
 
-def get_adjacent_numbers(i, j, lines):
+def get_adjacent_numbers(i: int, j: int, lines: list[str]) -> list[int]:
     """
     Get the adjacent numbers around a given position in a 2D grid.
 
@@ -152,7 +154,7 @@ def get_adjacent_numbers(i, j, lines):
     Returns:
         List[int]: A list of adjacent numbers.
     """
-    adjacent = []
+    adjacent: list[int] = []
     for ii in range(i - 1, i + 2):
         if out_of_bounds(ii, lines):
             continue
@@ -168,7 +170,7 @@ def get_adjacent_numbers(i, j, lines):
     return adjacent
 
 
-def out_of_bounds(index, items):
+def out_of_bounds(index: int, items: str | list[str]) -> bool:
     """
     Check if the given index is out of bounds for the given list of items.
 
@@ -182,7 +184,7 @@ def out_of_bounds(index, items):
     return index < 0 or index >= len(items)
 
 
-def resolve_whole_num(i, line):
+def resolve_whole_num(i: int, line: str) -> tuple[int, int]:
     """
     Resolves a whole number from a given position in a line.
 
@@ -205,7 +207,7 @@ def resolve_whole_num(i, line):
         num += line[forward]
         forward += 1
 
-    return num, forward
+    return int(num), forward
 
 
 if __name__ == "__main__":

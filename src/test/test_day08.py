@@ -3,7 +3,7 @@ from .. import util
 from ..day08 import part_one, part_two
 
 
-def test_part_one():
+def test_part_one() -> None:
     """
     Test function for part_one.
 
@@ -24,13 +24,19 @@ def test_part_one():
         "GGG = (GGG, GGG)",
         "ZZZ = (ZZZ, ZZZ)",
     ]
-    example_data_2 = ["LLR", "", "AAA = (BBB, BBB)", "BBB = (AAA, ZZZ)", "ZZZ = (ZZZ, ZZZ)"]
+    example_data_2 = [
+        "LLR",
+        "",
+        "AAA = (BBB, BBB)",
+        "BBB = (AAA, ZZZ)",
+        "ZZZ = (ZZZ, ZZZ)",
+    ]
     assert part_one(example_data_1) == 2
     assert part_one(example_data_2) == 6
     assert part_one(util.get_lines("day08")) == 14257
 
 
-def test_part_two():
+def test_part_two() -> None:
     example_data = [
         "LR",
         "",

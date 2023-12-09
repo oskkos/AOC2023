@@ -1,20 +1,26 @@
 """Advent of Code 2023 - Day 7 tasks"""
 
+from typing import TypedDict
+
+Hand = TypedDict(
+    "Hand", {"bids": int, "cards": list[int], "hand": dict[str, list[int] | None]}
+)
+
 # pylint: disable=import-error
-if __package__ is None or not __package__:
-    import util
+if not __package__:
+    import util  # type: ignore
 else:
     from . import util
 
 
-def part_one(lines):
+def part_one(lines: list[str]) -> int:
     """
     part one
     """
     return calculate_bids(sort_hands(resolve_hands(lines, False)))
 
 
-def part_two(lines):
+def part_two(lines: list[str]) -> int:
     """
     part two
     """
@@ -22,7 +28,7 @@ def part_two(lines):
 
 
 # pylint: disable-next=too-many-return-statements
-def map_to_number(char, joker=False):
+def map_to_number(char: str, joker: bool = False) -> int:
     """
     Maps a character to its corresponding number value.
 
@@ -48,7 +54,7 @@ def map_to_number(char, joker=False):
     return int(char)
 
 
-def resolve_hands(lines, joker):
+def resolve_hands(lines: list[str], joker: bool) -> list[Hand]:
     """
     Resolves the hands from the given lines and joker.
 
@@ -59,16 +65,16 @@ def resolve_hands(lines, joker):
     Returns:
         list: List of dictionaries representing the resolved hands.
     """
-    hands = []
+    hands: list[Hand] = []
     for line in lines:
         cards = list(map(lambda char: map_to_number(char, joker), line.split(" ")[0]))
         bids = int(line.split(" ")[1])
-        hands.append({"hand": group_hand(cards), "cards": cards, "bids": bids})
+        hands.append(Hand({"hand": group_hand(cards), "cards": cards, "bids": bids}))
     return hands
 
 
 # pylint: disable-next=too-many-return-statements,too-many-branches
-def group_hand(cards):
+def group_hand(cards: list[int]) -> dict[str, list[int] | None]:
     """
     Group the cards in the hand and determine the best possible combination.
 
@@ -92,29 +98,28 @@ def group_hand(cards):
 
               If no valid combination is found, an empty dictionary is returned.
     """
-    groups = {}
+    groups: dict[int, int] = {}
     jokers = 0
-    for char in cards:
-        card = map_to_number(char)
+    for card in cards:
         if card == 1:
             jokers += 1
         elif card not in groups:
             groups[card] = 1
         else:
             groups[card] += 1
-    groups2 = {}
+    groups2: dict[str, list[int] | None] = {}
     items_sorted = sorted(groups.items(), key=lambda x: x[1], reverse=True)
     if jokers == 5:
-        return {"FiveOfAKind": 0}
+        return {"FiveOfAKind": [0]}
     for card, group in items_sorted:
         if int(group) + jokers == 5:
-            groups2["FiveOfAKind"] = card
+            groups2["FiveOfAKind"] = [card]
         elif int(group) + jokers == 4:
-            groups2["FourOfAKind"] = card
+            groups2["FourOfAKind"] = [card]
         elif int(group) + jokers == 3:
-            groups2["ThreeOfAKind"] = card
+            groups2["ThreeOfAKind"] = [card]
         elif int(group) + jokers == 2:
-            pairs = groups2.get("Pair", [])
+            pairs: list[int] = groups2.get("Pair", [])  # type: ignore
             pairs.append(card)
             pairs.sort(reverse=True)
             if len(pairs) > 1:
@@ -123,16 +128,17 @@ def group_hand(cards):
                 groups2["Pair"] = pairs
         else:
             high_cards = groups2.get("HighCards", [])
-            high_cards.append(card)
-            high_cards.sort(reverse=True)
-            groups2["HighCards"] = high_cards
+            if high_cards is not None:
+                high_cards.append(card)
+                high_cards.sort(reverse=True)
+            groups2["HighCards"] = high_cards if high_cards is not None else []
         jokers = 0
     if groups2.get("FiveOfAKind"):
         return {"FiveOfAKind": groups2.get("FiveOfAKind")}
     if groups2.get("FourOfAKind"):
         return {"FourOfAKind": groups2.get("FourOfAKind")}
     if groups2.get("ThreeOfAKind") and groups2.get("Pair"):
-        return {"FullHouse": 0}
+        return {"FullHouse": [0]}
     if groups2.get("ThreeOfAKind"):
         return {"ThreeOfAKind": groups2.get("ThreeOfAKind")}
     if groups2.get("TwoPairs"):
@@ -144,7 +150,7 @@ def group_hand(cards):
     return {}
 
 
-def sort_hands(hands):
+def sort_hands(hands: list[Hand]) -> list[Hand]:
     """
     Sorts a list of hands based on their type and number of cards.
 
@@ -183,7 +189,7 @@ def sort_hands(hands):
     )
 
 
-def calculate_bids(hands_sorted):
+def calculate_bids(hands_sorted: list[Hand]) -> int:
     """
     Calculate the total bids based on the given list of hands.
 
@@ -194,7 +200,7 @@ def calculate_bids(hands_sorted):
     Returns:
         int: The total bids calculated based on the given list of hands.
     """
-    total = 0
+    total: int = 0
     for i, hand in enumerate(hands_sorted):
         total += hand["bids"] * (len(hands_sorted) - i)
     return total

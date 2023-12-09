@@ -3,7 +3,7 @@ from .. import util
 from ..day03 import part_one, part_two
 
 
-def test_part_one():
+def test_part_one() -> None:
     """
     Test function for part one of the AOC2023 day03 puzzle.
 
@@ -29,7 +29,7 @@ def test_part_one():
     assert part_one(util.get_lines("day03")) == 540131
 
 
-def test_part_two():
+def test_part_two() -> None:
     """
     Test function for part_two.
 
