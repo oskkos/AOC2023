@@ -1,6 +1,6 @@
 """Advent of Code 2023 - Unit tests for day 10 tasks"""
 from .. import util
-from ..day10 import part_one
+from ..day10 import part_one, part_two
 
 
 def test_part_one() -> None:
@@ -30,3 +30,13 @@ def test_part_one() -> None:
     assert part_one(example_data_1) == 4
     assert part_one(example_data_2) == 8
     assert part_one(util.get_lines("day10")) == 6613
+
+
+def test_part_two() -> None:
+    """
+    Test case for the part_two function.
+
+    This test case asserts that the output of the part_two function, when called with the input from "day10" file,
+    is equal to 511.
+    """
+    assert part_two(util.get_lines("day10")) == 511
