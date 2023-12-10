@@ -2,9 +2,7 @@
 
 from typing import TypedDict
 
-Hand = TypedDict(
-    "Hand", {"bids": int, "cards": list[int], "hand": dict[str, list[int] | None]}
-)
+Hand = TypedDict("Hand", {"bids": int, "cards": list[int], "hand": dict[str, list[int] | None]})
 
 # pylint: disable=import-error
 if not __package__:

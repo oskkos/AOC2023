@@ -68,9 +68,7 @@ def instructions_and_mapping(lines: list[str]) -> tuple[str, dict[str, list[str]
     return instructions, mapping
 
 
-def runner(
-    instructions: str, mapping: dict[str, list[str]], current: str, ending: str
-) -> int:
+def runner(instructions: str, mapping: dict[str, list[str]], current: str, ending: str) -> int:
     """
     Runs the instructions on the mapping to find the number of steps required to
     reach a sequence ending with the specified ending.

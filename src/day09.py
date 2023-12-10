@@ -21,13 +21,9 @@ def part_one(lines: list[str]) -> int:
     """
     total = 0
     for line in lines:
-        nums = list(
-            map(int, re.findall(r"(-?\d+)", line))
-        )  # Convert strings to integers
+        nums = list(map(int, re.findall(r"(-?\d+)", line)))  # Convert strings to integers
         sequences = get_sequences(nums)
-        last_values = [
-            seq[-1] for seq in sequences
-        ]  # Retrieve the last value from each sequence
+        last_values = [seq[-1] for seq in sequences]  # Retrieve the last value from each sequence
         next_val = sum(last_values)
         total += next_val
     return total
@@ -45,13 +41,9 @@ def part_two(lines: list[str]) -> int:
     """
     total = 0
     for line in lines:
-        nums = list(
-            map(int, re.findall(r"(-?\d+)", line))
-        )  # Convert strings to integers
+        nums = list(map(int, re.findall(r"(-?\d+)", line)))  # Convert strings to integers
         sequences = get_sequences(nums)
-        first_values = [
-            seq[0] for seq in sequences
-        ]  # Retrieve the first value from each sequence
+        first_values = [seq[0] for seq in sequences]  # Retrieve the first value from each sequence
         first_values = list(reversed(first_values))
         extrapolated = 0
         for value in first_values:

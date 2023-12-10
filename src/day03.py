@@ -116,9 +116,7 @@ def part_two(lines: list[str]) -> int:
     return total
 
 
-def check_if_number_is_adjacent_to_symbol(
-    i: int, j: int, lines: list[str], number: str
-) -> bool:
+def check_if_number_is_adjacent_to_symbol(i: int, j: int, lines: list[str], number: str) -> bool:
     """
     Checks if a number is adjacent to a symbol in the given lines of text.
 
