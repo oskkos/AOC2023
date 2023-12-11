@@ -61,7 +61,7 @@ def instructions_and_mapping(lines: list[str]) -> tuple[str, dict[str, list[str]
     instructions = lines.pop(0).strip()
     mapping: dict[str, list[str]] = {}
     for line in lines:
-        if not line.strip():
+        if not line:
             continue
         chunks: list[str] = re.findall(r"[\dA-Z]+", line)
         mapping[chunks.pop(0)] = chunks

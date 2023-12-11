@@ -135,7 +135,7 @@ def check_if_number_is_adjacent_to_symbol(i: int, j: int, lines: list[str], numb
         for jj in range(j - 1, j + len(number) + 1):
             if out_of_bounds(jj, lines[ii]):
                 continue
-            if re.search(r"[^\d.]", lines[ii][jj].strip()):
+            if re.search(r"[^\d.]", lines[ii][jj]):
                 return True
     return False
 

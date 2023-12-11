@@ -95,19 +95,19 @@ def resolve_current_map(current_map: str, line: str) -> str:
     Returns:
         str: The resolved map based on the line.
     """
-    if line.strip() == "seed-to-soil map:":
+    if line == "seed-to-soil map:":
         return "seed-to-soil"
-    if line.strip() == "soil-to-fertilizer map:":
+    if line == "soil-to-fertilizer map:":
         return "soil-to-fertilizer"
-    if line.strip() == "fertilizer-to-water map:":
+    if line == "fertilizer-to-water map:":
         return "fertilizer-to-water"
-    if line.strip() == "water-to-light map:":
+    if line == "water-to-light map:":
         return "water-to-light"
-    if line.strip() == "light-to-temperature map:":
+    if line == "light-to-temperature map:":
         return "light-to-temperature"
-    if line.strip() == "temperature-to-humidity map:":
+    if line == "temperature-to-humidity map:":
         return "temperature-to-humidity"
-    if line.strip() == "humidity-to-location map:":
+    if line == "humidity-to-location map:":
         return "humidity-to-location"
     return current_map
 

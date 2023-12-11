@@ -12,4 +12,4 @@ def get_lines(file_name: str) -> list[str]:
     """
     file_path = os.path.dirname(os.path.abspath(__file__)) + "/inputs/" + file_name + ".txt"
     with open(file_path, "r", encoding="utf-8") as file:
-        return file.readlines()
+        return list(map(str.strip, file.readlines()))
