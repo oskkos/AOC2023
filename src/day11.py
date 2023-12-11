@@ -18,7 +18,23 @@ def part_one(lines: list[str]) -> int:
     Returns:
         int: The total number of paths between points.
     """
-    lines = expand_lines(lines)
+    return part_two(lines, 2)
+
+
+# pylint: disable-next=too-many-locals
+def part_two(lines: list[str], dot_row_or_col_multiplier: int) -> int:
+    """
+    Calculates the number of paths between dots in a galaxy map.
+
+    Args:
+        lines (list[str]): The lines representing the galaxy map.
+        dot_row_or_col_multiplier (int): The multiplier for paths between
+                                         dots in the same row or column.
+
+    Returns:
+        int: The total number of paths between dots in the galaxy map.
+    """
+    dot_rows, dot_cols = get_dot_rows_and_cols(lines)
     galaxy_map = build_galaxy_map(lines)
 
     paths = 0
@@ -26,19 +42,34 @@ def part_one(lines: list[str]) -> int:
         for g2, (x2, y2) in galaxy_map.items():
             if g2 <= g:
                 continue
-            paths += abs(x1 - x2) + abs(y1 - y2)
+            from_row = min(x1, x2)
+            to_row = max(x1, x2)
+            from_col = min(y1, y2)
+            to_col = max(y1, y2)
+
+            for i in range(from_row + 1, to_row + 1):
+                if i in dot_rows:
+                    paths += dot_row_or_col_multiplier
+                else:
+                    paths += 1
+            for i in range(from_col + 1, to_col + 1):
+                if i in dot_cols:
+                    paths += dot_row_or_col_multiplier
+                else:
+                    paths += 1
     return paths
 
 
-def expand_lines(lines: list[str]) -> list[str]:
+def get_dot_rows_and_cols(lines: list[str]) -> tuple[list[int], list[int]]:
     """
-    Expands the lines by adding dots ('.') to rows and columns that contain only dots.
+    Gets the rows and columns that contain only dots.
 
     Args:
-        lines (list[str]): The list of lines to expand.
+        lines (list[str]): The lines to check.
 
     Returns:
-        list[str]: The expanded list of lines.
+        tuple[list[int], list[int]]: A tuple containing the rows and columns that contain
+                                     only dots.
     """
     dot_rows = []
     for i, line in enumerate(lines):
@@ -50,14 +81,7 @@ def expand_lines(lines: list[str]) -> list[str]:
     for i in range(cols_length):
         if all(line[i] == "." for line in lines):
             dot_cols.append(i)
-
-    for row in reversed(dot_rows):
-        lines.insert(row, "." * len(lines[0]))  # Add new line at the position of row
-
-    for col in reversed(dot_cols):
-        for i, line in enumerate(lines):
-            lines[i] = line[:col] + "." + line[col:]  # Insert dot at the position of col
-    return lines
+    return dot_rows, dot_cols
 
 
 def build_galaxy_map(lines: list[str]) -> dict[int, tuple[int, int]]:
@@ -82,4 +106,4 @@ def build_galaxy_map(lines: list[str]) -> dict[int, tuple[int, int]]:
 
 if __name__ == "__main__":
     print("Part one: " + str(part_one(util.get_lines("day11"))))
-    # print("Part two: " + str(part_two(util.get_lines("temp"))))
+    print("Part two: " + str(part_two(util.get_lines("day11"), 1000000)))
