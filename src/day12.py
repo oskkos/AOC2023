@@ -1,4 +1,6 @@
-# pylint:disable=missing-module-docstring
+"""Advent of Code 2023 - Day 12 tasks"""
+
+
 import functools
 
 # pylint:disable=import-error
