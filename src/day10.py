@@ -1,4 +1,4 @@
-"""Advent of Code 2023 - Day 9 tasks"""
+"""Advent of Code 2023 - Day 10 tasks"""
 
 import math
 
@@ -75,7 +75,9 @@ def part_two(lines: list[str]) -> int:
     return inside_chars
 
 
-def handle_angle(seen_char: bool, char: str, angle: str, inside: bool) -> tuple[str, bool]:
+def handle_angle(
+    seen_char: bool, char: str, angle: str, inside: bool
+) -> tuple[str, bool]:
     """
     Handle the angle based on the given parameters.
 

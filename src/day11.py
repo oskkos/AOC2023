@@ -1,4 +1,4 @@
-"""Advent of Code 2023 - Day 9 tasks"""
+"""Advent of Code 2023 - Day 11 tasks"""
 
 
 # pylint: disable=import-error
