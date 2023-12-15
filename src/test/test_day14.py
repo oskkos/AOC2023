@@ -30,3 +30,9 @@ def test_part_one() -> None:
     """
     assert part_one(example_data) == 136
     assert part_one(util.get_lines("day14")) == 106997
+
+
+def test_part_two() -> None:
+    """
+    No test for part 2 as it takes too long to run. :-/
+    """
