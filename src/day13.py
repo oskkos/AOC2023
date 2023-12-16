@@ -23,16 +23,37 @@ def part_one(lines: list[str]) -> int:
     for pattern in patterns:
         h_score = calc_horizontal_score(pattern)
         if h_score:
-            for x in pattern:
-                print(x)
-            print(f"Horizontal score: {h_score}")
-            print()
-
             total += 100 * h_score
 
         v_score = calc_vertical_score(pattern)
         if v_score:
             total += v_score
+
+    return total
+
+
+def part_two(lines: list[str]) -> int:
+    """
+    Calculates the total score for a given list of patterns.
+
+    Args:
+        lines (list[str]): The list of patterns.
+
+    Returns:
+        int: The total score.
+    """
+    total = 0
+    patterns = lines_to_patterns(lines)
+    for pattern in patterns:
+        for i in range(len(pattern) - 1):
+            h_score = check_horizontal_match2(pattern, i)
+            if h_score:
+                total += 100 * h_score
+
+        for col in range(len(pattern[0]) - 1):
+            v_col = check_vertical_match2(pattern, col)
+            if v_col:
+                total += v_col
 
     return total
 
@@ -105,6 +126,35 @@ def check_vertical_match(pattern: list[str], col_nbr: int) -> bool:
     return True
 
 
+def check_vertical_match2(pattern: list[str], col_nbr: int) -> int:
+    """
+    Check if there is a vertical match in the given pattern at the specified column number.
+
+    Args:
+        pattern (list[str]): The pattern to check for vertical match.
+        col_nbr (int): The column number to check.
+
+    Returns:
+        int: The column number if there is a vertical match, otherwise 0.
+    """
+    smudges = 0
+    for line in pattern:
+        a = col_nbr
+        b = col_nbr + 1
+        while True:
+            if line[a] != line[b]:
+                smudges += 1
+                if smudges > 1:
+                    return 0
+            a -= 1
+            b += 1
+            if a < 0 or b >= len(pattern[0]):
+                break
+    if not smudges:
+        return 0
+    return col_nbr + 1
+
+
 def calc_horizontal_score(pattern: list[str]) -> int:
     """
     Calculates the horizontal score of a pattern.
@@ -146,6 +196,35 @@ def check_horizontal_match(pattern: list[str], row_nbr: int) -> bool:
     return True
 
 
+def check_horizontal_match2(pattern: list[str], row_nbr: int) -> int:
+    """
+    Check for a horizontal match between two rows in a pattern.
+
+    Args:
+        pattern (list[str]): The pattern to check.
+        row_nbr (int): The row number to start the check from.
+
+    Returns:
+        int: The row number if a horizontal match is found, otherwise 0.
+    """
+    smudges = 0
+    a = row_nbr
+    b = row_nbr + 1
+    while True:
+        if a < 0 or b >= len(pattern):
+            break
+        for i in range(len(pattern[a])):
+            if pattern[a][i] != pattern[b][i]:
+                smudges += 1
+                if smudges > 1:
+                    return 0
+        a -= 1
+        b += 1
+    if not smudges:
+        return 0
+    return row_nbr + 1
+
+
 if __name__ == "__main__":
     print("Part one: " + str(part_one(util.get_lines("day13"))))
-    # print("Part two: " + str(part_two(util.get_lines("day12"))))
+    print("Part two: " + str(part_two(util.get_lines("day13"))))
